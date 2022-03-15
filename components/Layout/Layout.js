@@ -11,15 +11,12 @@ import {
   Segment
 } from "semantic-ui-react";
 import nprogress from "nprogress";
-import Router,{useRouter}  from "next/router";
+import Router from "next/router";
 import SideMenu from "./SideMenu";
 import Search from "./Search";
 
 function Layout({ children, user }) {
   const contextRef = createRef();
-  const router=useRouter();
-
-   const messagesRoute = router.pathname === "/messages";
 
   Router.onRouteChangeStart = () => nprogress.start();
   Router.onRouteChangeComplete = () => nprogress.done();
@@ -32,8 +29,6 @@ function Layout({ children, user }) {
         <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
           <Ref innerRef={contextRef}>
             <Grid>
-              {!messagesRoute ? (
-                <>
               <Grid.Column floated="left" width={2}>
                 <Sticky context={contextRef}>
                   <SideMenu user={user} />
@@ -51,13 +46,6 @@ function Layout({ children, user }) {
                   </Segment>
                 </Sticky>
               </Grid.Column>
-                 </>
-              ) : (
-                <>
-                  <Grid.Column floated="left" width={1} />
-                  <Grid.Column width={15}>{children}</Grid.Column>
-                </>
-              )}
             </Grid>
           </Ref>
         </div>

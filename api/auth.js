@@ -2,13 +2,10 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/UserModel");
 const FollowerModel = require("../models/FollowerModel");
-const NotificationModel = require("../models/NotificationModel");
-const ChatModel = require("../models/ChatModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
 const authMiddleware = require("../middleware/authMiddleware");
-
 
 router.get("/", authMiddleware, async (req, res) => {
   const { userId } = req;
@@ -47,6 +44,7 @@ router.post("/", async (req, res) => {
     if (!isPassword) {
       return res.status(401).send("Invalid Credentials");
     }
+
     const payload = { userId: user._id };
     jwt.sign(payload, process.env.jwtSecret, { expiresIn: "2d" }, (err, token) => {
       if (err) throw err;
