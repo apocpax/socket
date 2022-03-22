@@ -13,10 +13,11 @@ function SearchComponent() {
 
   const handleChange = async e => {
     const { value } = e.target;
-    if (value.trim().length === 0) return;
-
     setText(value);
     setLoading(true);
+
+    if (value.trim().length === 0) return;
+
 
     try {
       cancel && cancel();
