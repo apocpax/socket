@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/UserModel");
 const FollowerModel = require("../models/FollowerModel");
+const ChatModel = require("../models/ChatModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
@@ -43,6 +44,12 @@ router.post("/", async (req, res) => {
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
       return res.status(401).send("Invalid Credentials");
+    }
+
+    const chatModel = await ChatModel.findOne({ user:user._id });
+
+    if (!chatModel) {
+      await new chatModel({ user: user._id, chats: [] }).save();
     }
 
     const payload = { userId: user._id };
