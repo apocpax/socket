@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { List, Image, Search } from "semantic-ui-react";
 import axios from "axios";
 import cookie from "js-cookie";
@@ -16,9 +16,6 @@ function SearchComponent() {
     setText(value);
     setLoading(true);
 
-    if (value.trim().length === 0) return;
-
-
     try {
       cancel && cancel();
       const CancelToken = axios.CancelToken;
@@ -31,11 +28,7 @@ function SearchComponent() {
         })
       });
 
-      if (res.data.length === 0) {
-        results.length > 0 && setResults([]);
-
-        return setLoading(false);
-      }
+      if (res.data.length === 0) return setLoading(false);
 
       setResults(res.data);
     } catch (error) {
@@ -44,10 +37,6 @@ function SearchComponent() {
 
     setLoading(false);
   };
-
-  useEffect(() =>{
-    if (text.length === 0 && loading) setLoading(false);
-  }, [text]);
 
   return (
     <Search

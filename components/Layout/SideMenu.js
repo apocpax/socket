@@ -23,7 +23,7 @@ function SideMenu({
         </Link>
         <br />
 
-       <Link href="/messages">
+        <Link href="/messages">
           <List.Item active={isActive("/messages")}>
             <Icon
               name={unreadMessage ? "hand point right" : "mail outline"}
@@ -41,13 +41,10 @@ function SideMenu({
               name={unreadNotification ? "hand point right" : "bell outline"}
               size="large"
               color={
-                (isActive("/notifications") && "teal") ||
-                (unreadNotification && "orange")
+                (isActive("/notifications") && "teal") || (unreadNotification && "orange")
               }
             />
-            <List.Content>
-              <List.Header content="Notifications" />
-            </List.Content>
+            <List.Content>{pc && <List.Header content="Notifications" />}</List.Content>
           </List.Item>
         </Link>
         <br />
@@ -59,18 +56,14 @@ function SideMenu({
               size="large"
               color={router.query.username === username && "teal"}
             />
-            <List.Content>
-              <List.Header content="Account" />
-            </List.Content>
+            <List.Content>{pc && <List.Header content="Account" />}</List.Content>
           </List.Item>
         </Link>
         <br />
 
         <List.Item onClick={() => logoutUser(email)}>
           <Icon name="log out" size="large" />
-          <List.Content>
-            <List.Header content="Logout" />
-          </List.Content>
+          <List.Content>{pc && <List.Header content="Logout" />}</List.Content>
         </List.Item>
       </List>
     </>
